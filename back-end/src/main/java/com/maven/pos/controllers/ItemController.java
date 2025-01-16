@@ -1,7 +1,12 @@
 package com.maven.pos.controllers;
 
 import com.maven.pos.entities.Item;
+import com.maven.pos.entities.Topping;
+import com.maven.pos.entities.User;
+import com.maven.pos.enums.UserRole;
 import com.maven.pos.services.IItemService;
+import jakarta.annotation.Nullable;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -20,10 +25,14 @@ public class ItemController {
     @PostMapping("/add-item")
     public ResponseEntity<Item> generateItem(@ModelAttribute("itemName") String itemName,
                                              @ModelAttribute("itemPrice") Double itemPrice,
+                                             @ModelAttribute("isToppingPresent") Boolean isToppingPresent,
                                              @RequestParam("image")MultipartFile file) throws IOException {
+
+
         Item item=new Item();
         item.setItemName(itemName);
         item.setItemPrice(itemPrice);
+        item.setToppingPresent(isToppingPresent);
 
         return ResponseEntity.ok(itemService.addItem(item,file));
     }
@@ -48,7 +57,8 @@ public class ItemController {
     private ResponseEntity<?> updateItem(@ModelAttribute("itemId") Long itemId,
                                          @ModelAttribute("itemName") String itemName,
                                          @ModelAttribute("itemPrice") Double itemPrice,
-                                         @RequestParam("image")MultipartFile file) throws IOException {
+                                         @RequestParam(value="isToppingPresent",required = false) @Nullable Boolean isToppingPresent,
+                                         @RequestParam(value = "image",required = false) @Nullable MultipartFile file) throws IOException {
 
         Item item=new Item();
         item.setItemName(itemName);
@@ -56,4 +66,5 @@ public class ItemController {
         item.setItemId(itemId);
         return ResponseEntity.ok(itemService.updateItem(item,file));
     }
+
 }

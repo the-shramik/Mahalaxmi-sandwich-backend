@@ -27,7 +27,7 @@ public class Topping {
     private Double toppingPrice;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "topping", cascade = CascadeType.REMOVE, orphanRemoval = true)
+    @OneToMany(mappedBy = "topping", cascade = CascadeType.REMOVE/*, orphanRemoval = true*/)
     private List<SaleTopping> saleToppings;
 
 }

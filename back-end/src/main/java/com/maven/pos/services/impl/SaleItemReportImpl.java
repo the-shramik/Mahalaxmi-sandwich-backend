@@ -25,7 +25,14 @@ public class SaleItemReportImpl implements ISaleItemReport {
             sale.getSaleItems().forEach(saleItem -> {
                 SaleItemReport saleItemReport = new SaleItemReport();
                 saleItemReport.setBillNumber(saleItem.getSale().getSaleId());
-                saleItemReport.setItemName(saleItem.getItem().getItemName());
+
+                if(saleItem.getItem()!=null) {
+                    saleItemReport.setItemName(saleItem.getItem().getItemName());
+                }
+
+                if(saleItem.getItem2()!=null){
+                    saleItemReport.setItemName(saleItem.getItem2().getItemName());
+                }
                 saleItemReport.setQuantity(saleItem.getQuantity());
                 saleItemReport.setParcelCharges(sale.getParcelCharges());
                 saleItemReport.setExtraCharges(sale.getExtraCharges());
@@ -54,7 +61,7 @@ public class SaleItemReportImpl implements ISaleItemReport {
 
                 if (sale.getSaleToppings() != null) {
                     for (SaleTopping saleTopping : sale.getSaleToppings()) {
-                        if (saleTopping.getItem().getItemId().equals(saleItem.getItem().getItemId())) {
+                        if (saleTopping.getItem2().getItemId().equals(saleItem.getItem().getItemId())) {
                             toppingTotal += saleTopping.getTopping().getToppingPrice();
                             extraCharges += saleTopping.getTopping().getToppingPrice();
                         }
@@ -97,7 +104,7 @@ public class SaleItemReportImpl implements ISaleItemReport {
 
                 if (sale.getSaleToppings() != null) {
                     for (SaleTopping saleTopping : sale.getSaleToppings()) {
-                        if (saleTopping.getItem().getItemId().equals(saleItem.getItem().getItemId())) {
+                        if (saleTopping.getItem2().getItemId().equals(saleItem.getItem().getItemId())) {
                             toppingTotal += saleTopping.getTopping().getToppingPrice();
                             extraCharges += saleTopping.getTopping().getToppingPrice();
                         }
@@ -133,26 +140,19 @@ public class SaleItemReportImpl implements ISaleItemReport {
             sale.getSaleItems().forEach(saleItem -> {
                 SaleItemReport saleItemReport = new SaleItemReport();
 
-                double itemSubtotal = saleItem.getQuantity() * saleItem.getItem().getItemPrice();
+                double finalTotal = saleItem.getItem() != null
+                        ? saleItem.getQuantity() * saleItem.getItem().getItemPrice()
+                        : saleItem.getQuantity() * saleItem.getItem2().getItemPrice();
 
-                double toppingTotal = 0;
                 double extraCharges = 0;
 
-                if (sale.getSaleToppings() != null) {
-                    for (SaleTopping saleTopping : sale.getSaleToppings()) {
-                        if (saleTopping.getItem().getItemId().equals(saleItem.getItem().getItemId())) {
-                            toppingTotal += saleTopping.getTopping().getToppingPrice();
-                            extraCharges += saleTopping.getTopping().getToppingPrice();
-                        }
-                    }
+                if(saleItem.getItem()!=null) {
+                    saleItemReport.setItemName(saleItem.getItem().getItemName());
+                }else{
+                    saleItemReport.setItemName(saleItem.getItem2().getItemName());
                 }
-
-                saleItemReport.setItemName(saleItem.getItem().getItemName());
                 saleItemReport.setQuantity(saleItem.getQuantity());
 
-                double finalTotal = itemSubtotal + toppingTotal;
-
-                saleItemReport.setSubTotal(itemSubtotal);
                 saleItemReport.setFinalTotal(finalTotal);
 
                 saleItemReport.setExtraCharges(extraCharges);
@@ -176,26 +176,19 @@ public class SaleItemReportImpl implements ISaleItemReport {
             sale.getSaleItems().forEach(saleItem -> {
                 SaleItemReport saleItemReport = new SaleItemReport();
 
-                double itemSubtotal = saleItem.getQuantity() * saleItem.getItem().getItemPrice();
+                double finalTotal = saleItem.getItem() != null
+                        ? saleItem.getQuantity() * saleItem.getItem().getItemPrice()
+                        : saleItem.getQuantity() * saleItem.getItem2().getItemPrice();
 
-                double toppingTotal = 0;
                 double extraCharges = 0;
 
-                if (sale.getSaleToppings() != null) {
-                    for (SaleTopping saleTopping : sale.getSaleToppings()) {
-                        if (saleTopping.getItem().getItemId().equals(saleItem.getItem().getItemId())) {
-                            toppingTotal += saleTopping.getTopping().getToppingPrice();
-                            extraCharges += saleTopping.getTopping().getToppingPrice();
-                        }
-                    }
+                if(saleItem.getItem()!=null) {
+                    saleItemReport.setItemName(saleItem.getItem().getItemName());
+                }else{
+                    saleItemReport.setItemName(saleItem.getItem2().getItemName());
                 }
-
-                saleItemReport.setItemName(saleItem.getItem().getItemName());
                 saleItemReport.setQuantity(saleItem.getQuantity());
 
-                double finalTotal = itemSubtotal + toppingTotal;
-
-                saleItemReport.setSubTotal(itemSubtotal);
                 saleItemReport.setFinalTotal(finalTotal);
 
                 saleItemReport.setExtraCharges(extraCharges);

@@ -33,6 +33,9 @@ public class SaleServiceImpl implements ISaleService {
     private ItemRepository itemRepository;
 
     @Autowired
+    private ItemRepository2 itemRepository2;
+
+    @Autowired
     private IToppingRepository toppingRepository;
 
 
@@ -60,29 +63,27 @@ public class SaleServiceImpl implements ISaleService {
             SaleItem saleItem = new SaleItem();
             saleItem.setSale(savedSale); // Associate with the saved Sale
             saleItem.setItem(helper.getItem());
+            saleItem.setItem2(helper.getItem2());
             saleItem.setQuantity(helper.getSaleQty());
             saleItems.add(saleItem);
 
-
             // Check if toppings are present
-            if (!helper.getToppings().isEmpty()) {
-                for (Topping topping : helper.getToppings()) {
+            if (helper.getItem2()!=null) {
+                System.out.println("Inside if");
+                for (Topping topping : toppingRepository.findAll()) {
+                    System.out.println("foreach");
                     SaleTopping saleTopping = new SaleTopping();
                     saleTopping.setSale(savedSale); // Associate with the saved Sale
                     saleTopping.setTopping(topping);
-                    saleTopping.setItem(helper.getItem());
+
+                    saleTopping.setItem2(helper.getItem2());
                     saleToppings.add(saleTopping);
 
-
-
                     // Pass saleId, itemId, and toppingId to addItemOrders
-                    itemOrderService.addItemOrders(savedSale.getSaleId(), helper.getItem().getItemId(), topping.getToppingId(), saleItem.getQuantity());
+                    itemOrderService.addItemOrders(savedSale.getSaleId(),null, helper.getItem2().getItemId(), topping.getToppingId(), saleItem.getQuantity());
                 }
             } else {
-                // No toppings, pass null for toppingId
-
-
-                itemOrderService.addItemOrders(savedSale.getSaleId(), helper.getItem().getItemId(), null, saleItem.getQuantity());
+                    itemOrderService.addItemOrders(savedSale.getSaleId(), helper.getItem().getItemId(), null,null, saleItem.getQuantity());
             }
         }
 
@@ -92,6 +93,7 @@ public class SaleServiceImpl implements ISaleService {
         // Save the updated Sale entity with its associated items and toppings
         saleRepository.save(savedSale);
 
+        saleItemsDto.setBillNumber(savedSale.getSaleId());
         // Return SaleItems DTO
         return saleItemsDto;
 
@@ -124,26 +126,36 @@ public class SaleServiceImpl implements ISaleService {
 
         itemOrderRepository.findAllByStatusFalseAndCreatedDate(LocalDate.now()).forEach(itemOrder -> {
             SaleItemStatusOrders saleItemStatusOrder = new SaleItemStatusOrders();
-//            Sale sale=saleRepository.findBySaleIdAndItemIdAndToppingId(itemOrder.getSaleId(),itemOrder.getItemId(),itemOrder.getToppingId());
+//            Sale sale=saleRepository.findSaleBySaleIdAndItemIdAndToppingId(itemOrder.getSaleId(),itemOrder.getItemId(),itemOrder.getToppingId());
 
             saleItemStatusOrder.setOrderStatus(itemOrder.isStatus());
             saleItemStatusOrder.setBillNumber(itemOrder.getSaleId());
 
+            if(itemOrder.getItemId()!=null) {
+                Optional<Item> item = itemRepository.findById(itemOrder.getItemId());
+                if (item.isPresent()) {
+                    saleItemStatusOrder.setItemId(item.get().getItemId());
+                    saleItemStatusOrder.setItemId2(null);
+                    saleItemStatusOrder.setItemName(item.get().getItemName());
+                    saleItemStatusOrder.setImageUrl(item.get().getImageUrl());
+                    saleItemStatusOrder.setQuantity(itemOrder.getQuantity());
 
-            Optional<Item> item = itemRepository.findById(itemOrder.getItemId());
-            if (item.isPresent()) {
-                saleItemStatusOrder.setItemName(item.get().getItemName());
-                saleItemStatusOrder.setQuantity(itemOrder.getQuantity());
-                if (itemOrder.getToppingId() != null) {
-                    Topping topping = toppingRepository.findById(itemOrder.getToppingId()).get();
-                    saleItemStatusOrder.setToppingName(topping.getToppingName());
-                    saleItemStatusOrder.setToppingId(topping.getToppingId());
                 } else {
-                    saleItemStatusOrder.setToppingName("");
+                    System.out.println("*");
                 }
-
-            } else {
-                System.out.println("*");
+            }else {
+                Optional<Item2> item2 = itemRepository2.findById(itemOrder.getItemId2());
+                if (item2.isPresent()) {
+                    saleItemStatusOrder.setItemName(item2.get().getItemName());
+                    saleItemStatusOrder.setItemId2(item2.get().getItemId());
+                    saleItemStatusOrder.setItemId(null);
+                    saleItemStatusOrder.setImageUrl(item2.get().getImageUrl());
+                    saleItemStatusOrder.setQuantity(itemOrder.getQuantity());
+                    saleItemStatusOrder.setToppingName("Cheese");
+                    saleItemStatusOrder.setToppingId(1L);
+                } else {
+                    System.out.println("*");
+                }
             }
 
 

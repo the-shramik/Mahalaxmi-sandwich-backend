@@ -20,6 +20,7 @@ public class TempSale {
 
     private Long billNumber;
     private Long itemId;
+    private Long itemId2;
     private Long toppingId;
     private Boolean status;
 }

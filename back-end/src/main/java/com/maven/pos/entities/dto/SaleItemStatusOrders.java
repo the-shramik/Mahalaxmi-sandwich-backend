@@ -10,7 +10,10 @@ import lombok.NoArgsConstructor;
 public class SaleItemStatusOrders {
 
     private Long billNumber;
+    private Long itemId;
+    private Long itemId2;
     private String itemName;
+    private String imageUrl;
     private Integer quantity;
     private Boolean orderStatus;
     private String toppingName;

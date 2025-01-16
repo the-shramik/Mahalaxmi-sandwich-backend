@@ -1,0 +1,39 @@
+<div class="container-fluid p-3 bg-primary text-white fade-in sticky-top no-print">
+    <div class="row">
+        <div class="col">
+            <h4> {{ date }} &nbsp;{{ time }}</h4>
+
+        </div>
+        <div class="col text-end">
+            <button class="btn btn-danger" (click)="logout()">Log Out</button>
+        </div>
+    </div>
+    <div class="row mt-2">
+        <div class="col">
+            <nav>
+                <ul class="nav nav-pills">
+                    <li class="nav-item">
+                        <a class="mx-2 btn btn-outline-warning bg-color" routerLink="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="mx-2 btn btn-outline-warning bg-color" routerLink="/home/add-menu">Add Menu</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="mx-2 btn btn-outline-warning bg-color" routerLink="/home/report">Reports</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="mx-2 btn btn-outline-warning bg-color" routerLink="/home/kitchen">Kitchen</a>
+                    </li>
+                    <!-- <li class="nav-item">
+                        <a class="nav-link btn-secondary text-white" routerLink="/home/completed-order">Completed
+                            Orders</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn-secondary text-white" routerLink="/home/processing-order">Processing
+                            Orders</a>
+                    </li> -->
+                </ul>
+            </nav>
+        </div>
+    </div>
+</div>

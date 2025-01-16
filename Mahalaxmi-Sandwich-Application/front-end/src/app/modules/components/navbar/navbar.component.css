@@ -1,0 +1,48 @@
+
+body {
+    background-color: #f7f5f5;
+}
+
+.navbar, .btn-primary, .btn-danger {
+    transition: all 0.3s ease;
+}
+
+
+.card {
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+footer {
+    font-size: 0.9rem;
+    color: #555;
+}
+
+.fade-in {
+    opacity: 0;
+    animation: fadeIn ease 2s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+    0% { opacity: 0; }
+    100% { opacity: 1; }
+}
+
+.btn{
+    font-weight: bold;
+    color: white;
+}
+.btn:hover{
+    font-weight: bold;
+    color: white;
+}
+
+.bg-color {
+    background-color: darkblue;
+    border: none;
+}

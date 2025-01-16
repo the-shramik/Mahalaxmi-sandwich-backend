@@ -24,8 +24,12 @@ public class SaleTopping {
     private Topping topping;
 
 
+//    @ManyToOne
+//    @JoinColumn(name = "item_id")
+//    private Item item;
+
     @ManyToOne
-    @JoinColumn(name = "item_id")
-    private Item item;
+    @JoinColumn(name = "item_id2")
+    private Item2 item2;
 
 }

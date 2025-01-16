@@ -17,6 +17,14 @@ public class ItemOrderController {
     @PatchMapping("/update-order-status")
     public ResponseEntity<?> updateOrderStatus(@RequestBody SaleToppingStatus saleToppingStatus) {
 
+        if(saleToppingStatus.getItem()!=null){
+            System.out.println("Item: "+saleToppingStatus.getItem().getItemId());
+        }
+
+        if(saleToppingStatus.getItem2()!=null){
+            System.out.println("Item2: "+saleToppingStatus.getItem2().getItemId());
+        }
+
         int row = itemOrderService.updateOrderStatus(saleToppingStatus);
 
         if (row > 0) {

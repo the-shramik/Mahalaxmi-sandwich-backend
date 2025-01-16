@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface IItemOrderService {
 
-    ItemOrders addItemOrders(Long saleId, Long itemId, Long toppingId, Integer quantity);
+    ItemOrders addItemOrders(Long saleId, Long itemId,Long itemId2, Long toppingId, Integer quantity);
 
     int updateOrderStatus(SaleToppingStatus saleToppingStatus);
 

@@ -25,6 +25,8 @@ public class ItemOrders {
 
     private Long itemId;
 
+    private Long itemId2;
+
     private Long toppingId;
 
     private Integer quantity;

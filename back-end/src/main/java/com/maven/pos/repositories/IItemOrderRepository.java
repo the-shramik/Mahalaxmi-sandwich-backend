@@ -20,6 +20,11 @@ public interface IItemOrderRepository extends JpaRepository<ItemOrders,Long> {
     @Query("UPDATE ItemOrders io SET io.status = :status WHERE io.itemId = :itemId AND io.saleId = :saleId AND (:toppingId IS NULL OR io.toppingId = :toppingId)")
     int updateStatusByItemIdAndToppingIdAndSaleId(boolean status, Long itemId, Long toppingId, Long saleId);
 
+    @Modifying
+    @Transactional
+    @Query("UPDATE ItemOrders io SET io.status = :status WHERE io.itemId2 = :itemId2 AND io.saleId = :saleId AND (:toppingId IS NULL OR io.toppingId = :toppingId)")
+    int updateStatusByItemId2AndToppingIdAndSaleId(boolean status, Long itemId2, Long toppingId, Long saleId);
+
 
     @Query("SELECT io FROM ItemOrders io WHERE io.status = false AND FUNCTION('DATE', io.itemOrderDate) = :itemOrderDate")
     List<ItemOrders> findAllByStatusFalseAndCreatedDate(@Param("itemOrderDate") LocalDate itemOrderDate);
@@ -33,4 +38,10 @@ public interface IItemOrderRepository extends JpaRepository<ItemOrders,Long> {
     @Query("DELETE FROM ItemOrders io WHERE io.saleId = :saleId AND io.itemId = :itemId" +
             " AND (:toppingId IS NULL OR io.toppingId = :toppingId)")
     void deleteItemOrder(Long saleId, Long itemId, Long toppingId);
+
+    @Modifying
+    @Transactional
+    @Query("DELETE FROM ItemOrders io WHERE io.saleId = :saleId AND io.itemId2 = :itemId2" +
+            " AND (:toppingId IS NULL OR io.toppingId = :toppingId)")
+    void deleteItemOrder2(Long saleId, Long itemId2, Long toppingId);
 }

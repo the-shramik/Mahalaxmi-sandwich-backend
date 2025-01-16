@@ -1,6 +1,7 @@
 package com.maven.pos.entities.dto.helper;
 
 import com.maven.pos.entities.Item;
+import com.maven.pos.entities.Item2;
 import com.maven.pos.entities.Topping;
 import lombok.*;
 
@@ -11,6 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 public class SaleItemsHelper {
     private Item item;
-    private List<Topping> toppings;
+    private Item2 item2;
     private Integer saleQty;
 }

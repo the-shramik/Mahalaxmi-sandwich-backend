@@ -34,7 +34,7 @@ public interface ISaleRepository extends JpaRepository<Sale,Long> {
 
     @Query("SELECT s FROM Sale s " +
             "JOIN s.saleItems si " +
-            "JOIN s.saleToppings st ON st.sale.saleId = s.saleId AND st.item.itemId = si.item.itemId " +
+            "JOIN s.saleToppings st ON st.sale.saleId = s.saleId AND st.item2.itemId = si.item.itemId " +
             "WHERE s.saleId = :saleId " +
             "AND si.item.itemId = :itemId " +
             "AND st.topping.toppingId = :toppingId")

@@ -2,6 +2,7 @@ package com.maven.pos.controllers;
 
 import com.maven.pos.entities.Topping;
 import com.maven.pos.services.IToppingService;
+import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -56,4 +57,12 @@ public class ToppingController {
 
     }
 
+    @PostConstruct
+    public void addTopping(){
+        Topping topping=new Topping();
+        topping.setToppingId(1L);
+        topping.setToppingName("Cheese");
+        topping.setToppingPrice(10.0);
+        toppingService.addTopping(topping);
+    }
 }

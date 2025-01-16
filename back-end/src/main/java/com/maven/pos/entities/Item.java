@@ -31,6 +31,13 @@ public class Item {
 
     private LocalTime time;
 
+    private boolean isToppingPresent;
+
+    @ManyToOne
+    @JoinColumn(name = "item2_id")
+    @JsonIgnore
+    private Item2 item2;
+
 //    @Column(name = "image_name")
 //    private String imageName;
 
@@ -44,9 +51,9 @@ public class Item {
     @JsonIgnore
     private List<SaleItem> saleItems;
 
-    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
-    @JsonIgnore
-    private List<SaleTopping> saleToppings;
+//    @OneToMany(mappedBy = "item", cascade = CascadeType.ALL, orphanRemoval = true)
+//    @JsonIgnore
+//    private List<SaleTopping> saleToppings;
 
-
+    private Boolean isToppingSelected;
 }

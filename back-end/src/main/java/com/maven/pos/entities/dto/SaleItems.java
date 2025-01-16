@@ -13,6 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 public class SaleItems {
 
+    private Long billNumber;
     private List<SaleItemsHelper> saleItemsHelpers;
     private Double subTotal;
     private Double extraCharges;
